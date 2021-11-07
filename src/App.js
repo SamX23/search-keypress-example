@@ -1,23 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [keyboardClick, setKeyboardClick] = useState({
+    ctrl: null,
+    k: null,
+  });
+
+  const controlKeyListener = () => {
+    document.addEventListener("keydown", (e) => {
+      if (!e.repeat) {
+        if (e.key === "Control") {
+          console.log(e.key);
+          setKeyboardClick({ ...keyboardClick, ctrl: true });
+        }
+      }
+    });
+  };
+
+  const kKeyListener = () => {
+    document.addEventListener("keydown", (e) => {
+      if (!e.repeat) {
+        if (e.key === "k") {
+          console.log(e.key);
+          setKeyboardClick({ ...keyboardClick, k: e.key });
+        }
+      }
+    });
+  };
+
+  useEffect(() => {
+    controlKeyListener();
+    kKeyListener();
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Click CTRL + K to open search bar.</h1>
     </div>
   );
 }
